@@ -1,0 +1,4 @@
+.ccls-cache/
+CMakeLists.txt
+build/
+compile_commands.json
