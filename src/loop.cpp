@@ -8,6 +8,7 @@
 #include <SDL2/SDL.h>
 
 #include "shapes/gradient_square.hpp"
+#include "scenes/menu.hpp"
 #include "window.hpp"
 #include "macro.hpp"
 
@@ -25,13 +26,14 @@ void display_background(rbb_shape::rbb_gradient_square *square, window::gm_windo
 
 int start_game_loop(window::gm_window *window)
 {   
-    rbb_shape::rbb_gradient_square *background = new rbb_shape::rbb_gradient_square(0, 0, 1980, 1080, {230, 230, 230, 255}, {190, 190, 190, 255});
+    rbb_shape::rbb_gradient_square *background = new rbb_shape::rbb_gradient_square(0, 0, window->get_size().x, window->get_size().y, {230, 230, 230, 255}, {190, 190, 190, 255});
     background->create_texture(window);
     
     while (window->is_open) {
         window->refresh_event();
         window->reset_window();
         display_background(background, window);
+        gm_scenes::draw_menu(window);
         window->refresh_window();
     }
     return 0;

@@ -9,6 +9,7 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 
+#include "scenes/menu.hpp"
 #include "window.hpp"
 
 void free_all(window::gm_window *window)
@@ -33,6 +34,8 @@ int main(int ac, char **av)
         return return_value;
     }
 
+    gm_scenes::init_draw_menu(window);
+    
     return_value = start_game_loop(window);
     free_all(window);
     return return_value;

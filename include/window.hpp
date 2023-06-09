@@ -8,8 +8,8 @@
 #pragma once
 
 #define WINDOW_NAME "Parasite"
-#define SIZE_X 1920
-#define SIZE_Y 1080
+#define SIZE_X 1080
+#define SIZE_Y 1100
 #define BG_R 235
 #define BG_G 235
 #define BG_B 235
