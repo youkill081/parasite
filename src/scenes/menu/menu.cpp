@@ -13,17 +13,6 @@
 #include "macro.hpp"
 #include "color.h"
 
-/*
-SDL_Rect rect,
-    SDL_Color base_back_color[2],
-    short thickness,
-    int distances,
-    SDL_Color hover_back_color[2],
-    std::string text,
-    std::string font_path,
-    SDL_Color base_text_color,
-    SDL_Color hover_text_color
-*/
 namespace gm_scenes {
     rbb_widget::rbb_text_rounded_rectangle *start_button = NULL;
     rbb_widget::rbb_text_rounded_rectangle *rule_button = NULL;
