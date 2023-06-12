@@ -9,8 +9,11 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 
+#include "game/game_manager.hpp"
 #include "scenes/menu.hpp"
 #include "window.hpp"
+
+int start_game_loop(window::gm_window *window, game::game_manager *game_manager);
 
 void free_all(window::gm_window *window)
 {
@@ -21,6 +24,7 @@ void free_all(window::gm_window *window)
 int main(int ac, char **av)
 {
     window::gm_window* window = NULL;
+    game::game_manager *game_manager = NULL;
     int return_value = 84;
 
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0 || TTF_Init() < 0) {
@@ -34,9 +38,10 @@ int main(int ac, char **av)
         return return_value;
     }
 
+    game_manager = new game::game_manager(window);
     gm_scenes::init_draw_menu(window);
     
-    return_value = start_game_loop(window);
+    return_value = start_game_loop(window, game_manager);
     free_all(window);
     return return_value;
 }

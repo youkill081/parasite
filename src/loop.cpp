@@ -8,9 +8,21 @@
 #include <SDL2/SDL.h>
 
 #include "shapes/gradient_square.hpp"
+#include "game/game_manager.hpp"
 #include "scenes/menu.hpp"
+#include "utils/text.hpp"
 #include "window.hpp"
 #include "macro.hpp"
+#include "color.h"
+
+rbb_utils::rbb_text *create_title(window::gm_window *window)
+{
+    rbb_utils::rbb_text *title_text = new rbb_utils::rbb_text("Parasite", COLOR_LIGHT_RED, DEFAULT_FONT, 150, {0, 0, 1000, 1000});
+    title_text->create_texture(window);
+    SDL_Rect text_area = title_text->get_text_area();
+    title_text->set_position(gm_math::gm_vector(window->get_size().x / 2 - text_area.w / 2, 50));
+    return title_text;
+}
 
 void display_background(rbb_shape::rbb_gradient_square *square, window::gm_window *window)
 {
@@ -24,16 +36,27 @@ void display_background(rbb_shape::rbb_gradient_square *square, window::gm_windo
     square->draw_square(window);
 }
 
-int start_game_loop(window::gm_window *window)
-{   
+int start_game_loop(window::gm_window *window, game::game_manager *game_manager)
+{
+    int scene = SCENE_MENU;
     rbb_shape::rbb_gradient_square *background = new rbb_shape::rbb_gradient_square(0, 0, window->get_size().x, window->get_size().y, {230, 230, 230, 255}, {190, 190, 190, 255});
+    rbb_utils::rbb_text *title_text = create_title(window);
     background->create_texture(window);
     
     while (window->is_open) {
         window->refresh_event();
         window->reset_window();
         display_background(background, window);
-        gm_scenes::draw_menu(window);
+        title_text->draw(window);
+
+        switch (scene) {
+        case SCENE_MENU:
+            scene = gm_scenes::draw_menu(window);
+            break;
+        case SCENE_LEVEL_CHOOSE:
+            break;
+        }
+
         window->refresh_window();
     }
     return 0;

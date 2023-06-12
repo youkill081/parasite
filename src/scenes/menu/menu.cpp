@@ -18,7 +18,6 @@ namespace gm_scenes {
     rbb_widget::rbb_text_rounded_rectangle *rule_button = NULL;
     rbb_widget::rbb_text_rounded_rectangle *control_button = NULL;
     rbb_utils::rbb_text *credit_text = NULL;
-    rbb_utils::rbb_text *title_text = NULL;
     
     bool init_draw_menu(window::gm_window *window)
     {
@@ -68,11 +67,6 @@ namespace gm_scenes {
         credit_text->create_texture(window);
         SDL_Rect text_area = credit_text->get_text_area();
         credit_text->set_position(gm_math::gm_vector(window->get_size().x - text_area.w - 5, window->get_size().y - text_area.h - 5));
-
-        title_text = new rbb_utils::rbb_text("Parasite", COLOR_LIGHT_RED, DEFAULT_FONT, 150, {0, 0, 1000, 1000});
-        title_text->create_texture(window);
-        text_area = title_text->get_text_area();
-        title_text->set_position(gm_math::gm_vector(window->get_size().x / 2 - text_area.w / 2, 50));
         
         gm_scenes::menu::control_box::init_control_box(window);
         gm_scenes::menu::rule_box::init_rule_box(window);
@@ -99,6 +93,13 @@ namespace gm_scenes {
             return;
         }
     }
+
+    int get_return_value(window::gm_window *window)
+    {
+        if (start_button->is_hover() && window->event->button_is_pressed(BUTTON_LEFT))
+            return SCENE_LEVEL_CHOOSE;
+        return SCENE_MENU;
+    }
     
     int draw_menu(window::gm_window *window)
     {
@@ -111,8 +112,7 @@ namespace gm_scenes {
         display_info_box(window);
         
         credit_text->draw(window);
-        title_text->draw(window);
         
-        return 0;
+        return get_return_value(window);
     }
 }

@@ -41,5 +41,3 @@ namespace window {
         void set_viewport(SDL_Rect new_rect);
     };
 }
-
-int start_game_loop(window::gm_window *window);
