@@ -14,7 +14,6 @@
 #include "window.hpp"
 
 namespace game {
-
     enum map_entity {
         GM_PATH,
         GM_VOID,
@@ -42,5 +41,8 @@ namespace game {
         
         void load_map(int map_number);
         void display_map(window::gm_window *window);
+
+        struct map* get_map(int map_index);
+        int get_number_map(void);
     };
 }

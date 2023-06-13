@@ -21,3 +21,8 @@ enum {
 #define IMAGE_POSED_ROUBY "ressources/images/posed_rouby.bmp"
 
 #define MAP_FOLDER "ressources/maps/"
+
+#define ERROR_CODE 84
+
+#define GAME_SQUARE_SIZE 15
+#define GAME_WALL_THICKNESS 3

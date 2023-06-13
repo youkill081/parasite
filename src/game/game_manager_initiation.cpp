@@ -14,6 +14,8 @@
 #include "game/game_manager.hpp"
 #include "macro.hpp"
 
+void create_texture_map(struct game::map *map, window::gm_window *window);
+
 using namespace game;
 
 std::string get_file_content(std::string file_path)
@@ -75,7 +77,7 @@ void create_map_line(struct map *end, int line_number, std::string map_string)
     }
 }
 
-struct map *create_new_map(std::string file_name)
+struct map *create_new_map(std::string file_name, window::gm_window *window)
 {
     struct map *end = new struct map;
     std::string string_map;
@@ -96,6 +98,8 @@ struct map *create_new_map(std::string file_name)
     for (int i = 0; i < end->size; i++) {
         create_map_line(end, i, string_map);
     }
+
+    create_texture_map(end, window);
     
     return end;
 }
@@ -109,7 +113,7 @@ game_manager::game_manager(window::gm_window *window)
     
     while ((data = readdir(dir)) != NULL) {
         if (data->d_type == DT_REG) {
-            temp = create_new_map(data->d_name);
+            temp = create_new_map(data->d_name, window);
             this->map_list.push_back(temp);
             this->number_map++;
         }

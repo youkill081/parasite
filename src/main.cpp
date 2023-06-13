@@ -9,6 +9,7 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 
+#include "scenes/level_choose.hpp"
 #include "game/game_manager.hpp"
 #include "scenes/menu.hpp"
 #include "window.hpp"
@@ -40,7 +41,7 @@ int main(int ac, char **av)
 
     game_manager = new game::game_manager(window);
     gm_scenes::init_draw_menu(window);
-    
+    gm_scenes::init_level_choose(window, game_manager);
     return_value = start_game_loop(window, game_manager);
     free_all(window);
     return return_value;

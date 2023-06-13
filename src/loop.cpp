@@ -8,6 +8,7 @@
 #include <SDL2/SDL.h>
 
 #include "shapes/gradient_square.hpp"
+#include "scenes/level_choose.hpp"
 #include "game/game_manager.hpp"
 #include "scenes/menu.hpp"
 #include "utils/text.hpp"
@@ -54,6 +55,7 @@ int start_game_loop(window::gm_window *window, game::game_manager *game_manager)
             scene = gm_scenes::draw_menu(window);
             break;
         case SCENE_LEVEL_CHOOSE:
+            scene = gm_scenes::draw_level_choose(window, game_manager);
             break;
         }
 
