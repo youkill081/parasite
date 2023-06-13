@@ -25,6 +25,15 @@ rbb_utils::rbb_text *create_title(window::gm_window *window)
     return title_text;
 }
 
+rbb_utils::rbb_text *create_credit(window::gm_window *window)
+{
+    rbb_utils::rbb_text *credit_text = new rbb_utils::rbb_text("Created by Julien SERIN", COLOR_BLACK, DEFAULT_FONT, 25, {0, 0, 1000, 100});
+    credit_text->create_texture(window);
+    SDL_Rect text_area = credit_text->get_text_area();
+    credit_text->set_position(gm_math::gm_vector(window->get_size().x - text_area.w - 5, window->get_size().y - text_area.h - 5));
+    return credit_text;
+}
+
 void display_background(rbb_shape::rbb_gradient_square *square, window::gm_window *window)
 {
     int size_x;
@@ -42,6 +51,7 @@ int start_game_loop(window::gm_window *window, game::game_manager *game_manager)
     int scene = SCENE_MENU;
     rbb_shape::rbb_gradient_square *background = new rbb_shape::rbb_gradient_square(0, 0, window->get_size().x, window->get_size().y, {230, 230, 230, 255}, {190, 190, 190, 255});
     rbb_utils::rbb_text *title_text = create_title(window);
+    rbb_utils::rbb_text *credit_text = create_credit(window);
     background->create_texture(window);
     
     while (window->is_open) {
@@ -49,6 +59,7 @@ int start_game_loop(window::gm_window *window, game::game_manager *game_manager)
         window->reset_window();
         display_background(background, window);
         title_text->draw(window);
+        credit_text->draw(window);
 
         switch (scene) {
         case SCENE_MENU:

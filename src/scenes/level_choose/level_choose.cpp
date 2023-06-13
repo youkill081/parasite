@@ -15,6 +15,7 @@
 namespace gm_scenes {
     struct game::map* current_choosen_map = NULL;
     int current_choosen_map_index = 0;
+    int display_size = 450;
     int title_margin = 50;
     rbb_clock::rbb_clock *wait_button = new rbb_clock::rbb_clock();
     
@@ -42,19 +43,30 @@ namespace gm_scenes {
                 current_choosen_map_index--;
                 current_choosen_map = game_manager->get_map(current_choosen_map_index);
                 wait_button->restart();
+                display_size = 450;
             }
             if (window->event->key_is_pressed_scancode(SDL_SCANCODE_RIGHT) && current_choosen_map_index < game_manager->get_number_map() - 1) {
                 current_choosen_map_index++;
                 current_choosen_map = game_manager->get_map(current_choosen_map_index);
                 wait_button->restart();
+                display_size = 450;
             }
         }
     }
     
     void draw_map(window::gm_window *window)
     {
-        int display_size = 450;
         SDL_Rect draw_rect = {(int) window->get_size().x / 2 - display_size / 2, (int) (window->get_size().y / 2 + title_margin) - display_size / 2, display_size, display_size};
+
+        if (window->event->mouse_position.x >= draw_rect.x + GAME_SQUARE_SIZE && window->event->mouse_position.x <= draw_rect.x + draw_rect.w - GAME_SQUARE_SIZE &&
+            window->event->mouse_position.y >= draw_rect.y + GAME_SQUARE_SIZE && window->event->mouse_position.y <= draw_rect.y + draw_rect.h - GAME_SQUARE_SIZE) {
+            if (display_size < 500)
+                display_size *= 1.01;
+        } else {
+            if (display_size > 450)
+                display_size /= 1.01;
+        }
+
         SDL_RenderCopy(window->get_renderer(), current_choosen_map->map_texture, NULL, &draw_rect);
     }
     

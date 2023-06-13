@@ -17,7 +17,6 @@ namespace gm_scenes {
     rbb_widget::rbb_text_rounded_rectangle *start_button = NULL;
     rbb_widget::rbb_text_rounded_rectangle *rule_button = NULL;
     rbb_widget::rbb_text_rounded_rectangle *control_button = NULL;
-    rbb_utils::rbb_text *credit_text = NULL;
     
     bool init_draw_menu(window::gm_window *window)
     {
@@ -62,11 +61,6 @@ namespace gm_scenes {
         start_button->create_element(window);
         rule_button->create_element(window);
         control_button->create_element(window);
-
-        credit_text = new rbb_utils::rbb_text("Created by Julien SERIN", COLOR_BLACK, DEFAULT_FONT, 25, {0, 0, 1000, 100});
-        credit_text->create_texture(window);
-        SDL_Rect text_area = credit_text->get_text_area();
-        credit_text->set_position(gm_math::gm_vector(window->get_size().x - text_area.w - 5, window->get_size().y - text_area.h - 5));
         
         gm_scenes::menu::control_box::init_control_box(window);
         gm_scenes::menu::rule_box::init_rule_box(window);
@@ -109,9 +103,7 @@ namespace gm_scenes {
         rule_button->draw(window);
         control_button->draw(window);
 
-        display_info_box(window);
-        
-        credit_text->draw(window);
+        display_info_box(window);;
         
         return get_return_value(window);
     }

@@ -5,11 +5,13 @@
 ** the main file for the game manager
 */
 
+
 #include <sys/types.h>
 #include <iostream>
 #include <sstream>
 #include <dirent.h>
 #include <fstream>
+#include <algorithm>
 
 #include "game/game_manager.hpp"
 #include "macro.hpp"
@@ -108,14 +110,20 @@ game_manager::game_manager(window::gm_window *window)
 {
     DIR *dir = opendir(MAP_FOLDER);
     struct dirent *data;
-
     struct map *temp;
+    std::list<std::string> file_list;
     
     while ((data = readdir(dir)) != NULL) {
         if (data->d_type == DT_REG) {
-            temp = create_new_map(data->d_name, window);
-            this->map_list.push_back(temp);
-            this->number_map++;
+            file_list.push_back(data->d_name);
         }
+    }
+    closedir(dir);
+    file_list.sort();
+    std::list<std::string>::iterator curs;
+    for (curs = file_list.begin(); curs != file_list.end(); curs++) {
+        temp = create_new_map(*curs, window);
+        this->map_list.push_back(temp);
+        this->number_map++;
     }
 }
