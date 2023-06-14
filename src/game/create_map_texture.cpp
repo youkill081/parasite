@@ -82,15 +82,5 @@ void create_texture_map(struct game::map *map, window::gm_window *window)
 
     SDL_UnlockSurface(surf);
     map->map_texture = SDL_CreateTextureFromSurface(window->get_renderer(), surf);
-    printf("j'ai tout crée\n");
     SDL_FreeSurface(surf);
 }
-
-
-/*
-  for (int y = 0; y < tex_size; y++) {
-  for (int x = 0; x < tex_size; x++) {
-  ((Uint32*) surf->pixels)[y * tex_size + x] = color_interior;
-  }
-  }
-*/
