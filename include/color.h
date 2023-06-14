@@ -11,6 +11,7 @@
 #define COLOR_BLACK {0, 0, 0, 255}
 #define COLOR_WHITE {255, 255, 255, 255}
 #define COLOR_TRANSPARENT {0, 0, 0, 0}
+#define COLOR_GRAY {140, 140, 140, 255}
 #define COLOR_LIGHT_GRAY {228, 228, 228, 255}
 #define COLOR_YELLOW {251, 248, 51, 255}
 

@@ -55,7 +55,7 @@ namespace rbb_shape {
     {
         SDL_RenderCopy(window->get_renderer(), this->texture, NULL, &this->rect);
     }
-
+    
     void rbb_circle::create_texture(window::gm_window *window)
     {
         SDL_Surface *surf = SDL_CreateRGBSurfaceWithFormat(0, this->rect.w, this->rect.h, 32, SDL_PIXELFORMAT_RGBA8888);
