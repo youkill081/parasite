@@ -79,6 +79,24 @@ void create_map_line(struct map *end, int line_number, std::string map_string)
     }
 }
 
+void get_player_spawn(struct map *map, std::string string_map)
+{
+    std::istringstream chain(getline_by_number(string_map, map->size + 2));
+    std::string first, second;
+
+    std::getline(chain, first, ' ');
+    std::getline(chain, second);
+
+    map->player_spawn.x = std::stoi(first);
+    map->player_spawn.y = std::stoi(second);
+}
+
+void get_square_size(struct map *map, std::string string_map)
+{
+    std::string size_str = getline_by_number(string_map, map->size + 3);
+    map->square_size = std::atoi(size_str.c_str());
+}
+
 struct map *create_new_map(std::string file_name, window::gm_window *window)
 {
     struct map *end = new struct map;
@@ -101,6 +119,9 @@ struct map *create_new_map(std::string file_name, window::gm_window *window)
         create_map_line(end, i, string_map);
     }
 
+    get_player_spawn(end, string_map);
+    get_square_size(end, string_map);
+    
     create_texture_map(end, window);
     
     return end;
@@ -126,4 +147,6 @@ game_manager::game_manager(window::gm_window *window)
         this->map_list.push_back(temp);
         this->number_map++;
     }
+
+    this->party = new game::party();
 }

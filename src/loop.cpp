@@ -9,6 +9,8 @@
 
 #include "shapes/gradient_square.hpp"
 #include "scenes/level_choose.hpp"
+#include "scenes/game.hpp"
+
 #include "game/game_manager.hpp"
 #include "scenes/menu.hpp"
 #include "utils/text.hpp"
@@ -67,6 +69,9 @@ int start_game_loop(window::gm_window *window, game::game_manager *game_manager)
             break;
         case SCENE_LEVEL_CHOOSE:
             scene = gm_scenes::draw_level_choose(window, game_manager);
+            break;
+        case SCENE_GAME:
+            scene = gm_scenes::draw_game_scene(window, game_manager);
             break;
         }
 

@@ -25,7 +25,8 @@ namespace rbb_utils {
         std::string texture_path;
         SDL_Texture *texture = NULL;
         SDL_Rect rect;
-
+        SDL_Rect *texture_rect;
+        
         int flags;
     public:
         rbb_image();
@@ -38,5 +39,10 @@ namespace rbb_utils {
 
         void create_texture(window::gm_window *window);
         void draw(window::gm_window *window);
+
+        void set_texture_rect(SDL_Rect new_rect);
+        void move_texutre_rect(gm_math::gm_vector move);
+        
+        gm_math::gm_vector get_texture_size(void);
     };
 }
