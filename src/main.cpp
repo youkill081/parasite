@@ -42,9 +42,12 @@ int main(int ac, char **av)
 
     game_manager = new game::game_manager(window);
     game_manager->create_player_texture(window);
+    game_manager->party->parasite->create_texture(window);
     gm_scenes::init_draw_menu(window);
     gm_scenes::init_game_scene(window, game_manager);
     gm_scenes::init_level_choose(window, game_manager);
+    for (int i = 0; i < 4; i++)
+        game_manager->party->virus_list[i]->image->create_texture(window);
     return_value = start_game_loop(window, game_manager);
     free_all(window);
     return return_value;

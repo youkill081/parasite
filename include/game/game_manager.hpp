@@ -42,6 +42,18 @@ namespace game {
         gm_math::gm_vector player_spawn;
     };
 
+    class virus {
+    public:
+        virus();
+
+        bool wait;
+        rbb_utils::rbb_image *image;
+
+        gm_math::gm_vector box;
+        gm_math::gm_vector box_position;
+        game::direction direction;
+    };
+    
     class player {
     public:
         player();
@@ -58,6 +70,9 @@ namespace game {
         party(void);
 
         rbb_utils::rbb_image *parasite;
+        virus *virus_list[4];
+        
+        int  parasite_left;
         
         struct map *map;
         game::player *player = NULL;
@@ -89,3 +104,5 @@ namespace game {
 
 #define IS_PATH(map_entity) \
     (map_entity == game::GM_PATH || map_entity == game::GM_PARASITE)
+
+void eat_parasite(game::game_manager *game_manager);

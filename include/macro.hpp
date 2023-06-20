@@ -18,6 +18,10 @@ enum {
 #define MAP_FOLDER "ressources/maps/"
 
 #define PERSO_TEXTURE "ressources/testpac.bmp"
+#define VIRUS_TEXTURE "ressources/virus.bmp"
+#define VIRUS_TEXTURE_SIZE 20, 20
+#define PARASITE_TEXTURE "ressources/parasite.bmp"
+#define PARASITE_TEXTURE_SIZE 20, 20
 
 #define ERROR_CODE 84
 
@@ -28,4 +32,5 @@ enum {
 
 #define GAME_UPDATE_TIME 50
 
-#define PLAYER_SPEED 4
+#define PLAYER_SPEED 8
+#define VIRUS_SPEED 4

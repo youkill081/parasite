@@ -15,25 +15,25 @@ void update_kb_input(window::gm_window *window, game::game_manager *game_manager
     int square_size = game_manager->party->map->square_size;
     
     if (window->event->key_is_pressed_scancode(SDL_SCANCODE_LEFT)) {
-        if (game_manager->party->player->box.x > 0 && game_manager->party->map->map_list[(int) game_manager->party->player->box.x - 1][(int) game_manager->party->player->box.y] == game::GM_PATH) {
+        if (game_manager->party->player->box.x > 0 && IS_PATH(game_manager->party->map->map_list[(int) game_manager->party->player->box.x - 1][(int) game_manager->party->player->box.y])) {
             game_manager->party->player->direction = game::direction::LEFT;
             game_manager->party->player->box_position.y = square_size / 2;
         }
     }
     if (window->event->key_is_pressed_scancode(SDL_SCANCODE_RIGHT)) {
-        if (game_manager->party->player->box.x < map_size - 1 && game_manager->party->map->map_list[(int) game_manager->party->player->box.x + 1][(int) game_manager->party->player->box.y] == game::GM_PATH) {
+        if (game_manager->party->player->box.x < map_size - 1 && IS_PATH(game_manager->party->map->map_list[(int) game_manager->party->player->box.x + 1][(int) game_manager->party->player->box.y])) {
             game_manager->party->player->direction = game::direction::RIGHT;
             game_manager->party->player->box_position.y = square_size / 2;
         }
     }
     if (window->event->key_is_pressed_scancode(SDL_SCANCODE_UP)) {
-        if (game_manager->party->player->box.y > 0 && game_manager->party->map->map_list[(int) game_manager->party->player->box.x][(int) game_manager->party->player->box.y - 1] == game::GM_PATH) {
+        if (game_manager->party->player->box.y > 0 && IS_PATH(game_manager->party->map->map_list[(int) game_manager->party->player->box.x][(int) game_manager->party->player->box.y - 1])) {
             game_manager->party->player->direction = game::direction::UP;
             game_manager->party->player->box_position.x= square_size / 2;
         }
     }
     if (window->event->key_is_pressed_scancode(SDL_SCANCODE_DOWN)) {
-        if (game_manager->party->player->box.y < map_size - 1 && game_manager->party->map->map_list[(int) game_manager->party->player->box.x][(int) game_manager->party->player->box.y + 1] == game::GM_PATH) {
+        if (game_manager->party->player->box.y < map_size - 1 && IS_PATH(game_manager->party->map->map_list[(int) game_manager->party->player->box.x][(int) game_manager->party->player->box.y + 1])) {
             game_manager->party->player->direction = game::direction::DOWN;
             game_manager->party->player->box_position.x = square_size / 2;
         }
@@ -70,29 +70,37 @@ void fix_position(game::game_manager *game_manager)
     
     if (game_manager->party->player->box_position.x > square_size) {
         game_manager->party->player->box_position.x = (int) game_manager->party->player->box_position.x % square_size;
-        if (game_manager->party->map->map_list[(int) game_manager->party->player->box.x + 1][(int) game_manager->party->player->box.y] == game::GM_PATH)
+        if (IS_PATH(game_manager->party->map->map_list[(int) game_manager->party->player->box.x + 1][(int) game_manager->party->player->box.y])) {
             game_manager->party->player->box.x++;
+            eat_parasite(game_manager);
+        }
         else
             game_manager->party->player->direction = game::direction::NONE;
     }
     if (game_manager->party->player->box_position.y > square_size) {
         game_manager->party->player->box_position.y = (int)game_manager->party->player->box_position.y % square_size;
-        if (game_manager->party->map->map_list[(int) game_manager->party->player->box.x][(int) game_manager->party->player->box.y + 1] == game::GM_PATH)
+        if (IS_PATH(game_manager->party->map->map_list[(int) game_manager->party->player->box.x][(int) game_manager->party->player->box.y + 1])) {
             game_manager->party->player->box.y++;
+            eat_parasite(game_manager);
+        }
         else
             game_manager->party->player->direction = game::direction::NONE;
     }
     if (game_manager->party->player->box_position.x < 0) {
         game_manager->party->player->box_position.x = square_size - std::abs(game_manager->party->player->box_position.x);
-        if (game_manager->party->map->map_list[(int) game_manager->party->player->box.x - 1][(int) game_manager->party->player->box.y] == game::GM_PATH)
+        if (IS_PATH(game_manager->party->map->map_list[(int) game_manager->party->player->box.x - 1][(int) game_manager->party->player->box.y])) {
             game_manager->party->player->box.x--;
+            eat_parasite(game_manager);
+        }
         else
             game_manager->party->player->direction = game::direction::NONE;
     }
     if (game_manager->party->player->box_position.y < 0) {
         game_manager->party->player->box_position.y = square_size - std::abs(game_manager->party->player->box_position.y);
-        if (game_manager->party->map->map_list[(int) game_manager->party->player->box.x][(int) game_manager->party->player->box.y - 1] == game::GM_PATH)
+        if (IS_PATH(game_manager->party->map->map_list[(int) game_manager->party->player->box.x][(int) game_manager->party->player->box.y - 1])) {
             game_manager->party->player->box.y--;
+            eat_parasite(game_manager);
+        }
         else
             game_manager->party->player->direction = game::direction::NONE;
     }
