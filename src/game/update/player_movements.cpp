@@ -64,7 +64,7 @@ void set_player_position(window::gm_window *window, game::game_manager *game_man
         game_manager->party->player->texture->set_position(new_pos);
 }
 
-void fix_position(game::game_manager *game_manager)
+void fix_position(game::game_manager *game_manager, window::gm_window *window)
 {
     int square_size = game_manager->party->map->square_size;
     
@@ -72,7 +72,7 @@ void fix_position(game::game_manager *game_manager)
         game_manager->party->player->box_position.x = (int) game_manager->party->player->box_position.x % square_size;
         if (IS_PATH(game_manager->party->map->map_list[(int) game_manager->party->player->box.x + 1][(int) game_manager->party->player->box.y])) {
             game_manager->party->player->box.x++;
-            eat_parasite(game_manager);
+            eat_parasite(game_manager, window);
         }
         else
             game_manager->party->player->direction = game::direction::NONE;
@@ -81,7 +81,7 @@ void fix_position(game::game_manager *game_manager)
         game_manager->party->player->box_position.y = (int)game_manager->party->player->box_position.y % square_size;
         if (IS_PATH(game_manager->party->map->map_list[(int) game_manager->party->player->box.x][(int) game_manager->party->player->box.y + 1])) {
             game_manager->party->player->box.y++;
-            eat_parasite(game_manager);
+            eat_parasite(game_manager, window);
         }
         else
             game_manager->party->player->direction = game::direction::NONE;
@@ -90,7 +90,7 @@ void fix_position(game::game_manager *game_manager)
         game_manager->party->player->box_position.x = square_size - std::abs(game_manager->party->player->box_position.x);
         if (IS_PATH(game_manager->party->map->map_list[(int) game_manager->party->player->box.x - 1][(int) game_manager->party->player->box.y])) {
             game_manager->party->player->box.x--;
-            eat_parasite(game_manager);
+            eat_parasite(game_manager, window);
         }
         else
             game_manager->party->player->direction = game::direction::NONE;
@@ -99,7 +99,7 @@ void fix_position(game::game_manager *game_manager)
         game_manager->party->player->box_position.y = square_size - std::abs(game_manager->party->player->box_position.y);
         if (IS_PATH(game_manager->party->map->map_list[(int) game_manager->party->player->box.x][(int) game_manager->party->player->box.y - 1])) {
             game_manager->party->player->box.y--;
-            eat_parasite(game_manager);
+            eat_parasite(game_manager, window);
         }
         else
             game_manager->party->player->direction = game::direction::NONE;
@@ -124,5 +124,5 @@ void move_player(window::gm_window *window, game::game_manager *game_manager)
     case game::direction::NONE:
         break;
     }
-    fix_position(game_manager);
+    fix_position(game_manager, window);
 }

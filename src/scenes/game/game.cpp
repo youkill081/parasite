@@ -76,6 +76,7 @@ namespace gm_scenes {
             update_game(window, game_manager);
         draw_perso(window, game_manager);
         draw_virus(window, game_manager);
+        game_manager->point_text->draw(window);
         return SCENE_GAME;
     }
 }

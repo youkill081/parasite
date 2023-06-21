@@ -12,6 +12,7 @@
 #include <list>
 
 #include "utils/image.hpp"
+#include "utils/text.hpp"
 #include "window.hpp"
 
 namespace game {
@@ -39,6 +40,7 @@ namespace game {
         int **map_list = NULL;
         SDL_Texture *map_texture = NULL;
 
+        gm_math::gm_vector virus_spawn[4];
         gm_math::gm_vector player_spawn;
     };
 
@@ -89,11 +91,13 @@ namespace game {
         game_manager(window::gm_window *window);
 
         game::party *party = NULL;
+        rbb_utils::rbb_text *point_text;
         
         void load_party(int map_number);
         void display_party(window::gm_window *window);
 
         void create_player_texture(window::gm_window *window);
+        void create_text_texture(window::gm_window *window);
         
         struct map* get_map(int map_index);
             
@@ -105,4 +109,4 @@ namespace game {
 #define IS_PATH(map_entity) \
     (map_entity == game::GM_PATH || map_entity == game::GM_PARASITE)
 
-void eat_parasite(game::game_manager *game_manager);
+void eat_parasite(game::game_manager *game_manager, window::gm_window *window);

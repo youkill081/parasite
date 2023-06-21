@@ -34,3 +34,6 @@ enum {
 
 #define PLAYER_SPEED 8
 #define VIRUS_SPEED 4
+
+#define PARASITE_LEFT_POSITION 50, 1000
+#define PARASITE_LEFT_SIZE 60

@@ -51,6 +51,7 @@ namespace gm_scenes {
             return SCENE_MENU;
         if (window->event->key_is_pressed_scancode(SDL_SCANCODE_KP_ENTER) || window->event->key_is_pressed_scancode(SDL_SCANCODE_RETURN)) {
             game_manager->load_party(current_choosen_map_index);
+            game_manager->create_text_texture(window);
             return SCENE_GAME;
         }
         return SCENE_LEVEL_CHOOSE;

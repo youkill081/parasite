@@ -15,6 +15,7 @@
 
 #include "game/game_manager.hpp"
 #include "macro.hpp"
+#include "color.h"
 
 void create_texture_map(struct game::map *map, window::gm_window *window);
 
@@ -97,6 +98,20 @@ void get_square_size(struct map *map, std::string string_map)
     map->square_size = std::atoi(size_str.c_str());
 }
 
+void get_virus_spawn(struct map *map, std::string string_map)
+{
+    std::istringstream temp_line;
+    std::string temp_first, temp_second;
+    
+    for (int i = 4; i < 8; i++) {
+        temp_line = std::istringstream(getline_by_number(string_map, map->size + i));
+        std::getline(temp_line, temp_first, ' ');
+        std::getline(temp_line, temp_second);
+        map->virus_spawn[i - 4].x = std::stoi(temp_first);
+        map->virus_spawn[i - 4].y = std::stoi(temp_second);
+    }
+}
+
 struct map *create_new_map(std::string file_name, window::gm_window *window)
 {
     struct map *end = new struct map;
@@ -121,6 +136,7 @@ struct map *create_new_map(std::string file_name, window::gm_window *window)
 
     get_player_spawn(end, string_map);
     get_square_size(end, string_map);
+    get_virus_spawn(end, string_map);
     
     create_texture_map(end, window);
     
@@ -148,5 +164,8 @@ game_manager::game_manager(window::gm_window *window)
         this->number_map++;
     }
 
+    this->point_text = new rbb_utils::rbb_text("parasite left: x", COLOR_BLACK, DEFAULT_FONT, PARASITE_LEFT_SIZE, {PARASITE_LEFT_POSITION,  750, 200});
+    this->point_text->create_texture(window);
+    
     this->party = new game::party();
 }

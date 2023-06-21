@@ -24,9 +24,15 @@ int game_manager::get_number_map(void)
 void game_manager::load_party(int map_number)
 {
     this->party->load_party(this->get_map(map_number));
+    this->point_text->set_text("parasite left: " + std::to_string(this->party->parasite_left));
 }
 
 void game_manager::create_player_texture(window::gm_window *window)
 {
     this->party->player->texture->create_texture(window);
+}
+
+void game_manager::create_text_texture(window::gm_window *window)
+{
+    this->point_text->create_texture(window);
 }

@@ -55,7 +55,7 @@ void game::party::load_party(struct map *map)
     }
 
     for (int i = 0; i < 4; i++) {
-        this->virus_list[i]->box = gm_math::gm_vector(1, i + 2);
+        this->virus_list[i]->box = map->virus_spawn[i];
         this->virus_list[i]->box_position = gm_math::gm_vector(5, 5);
         this->virus_list[i]->direction = game::direction::NONE;
     }
