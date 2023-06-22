@@ -59,6 +59,8 @@ namespace game {
     class player {
     public:
         player();
+
+        bool alive = true;
         
         rbb_utils::rbb_image *texture;
 
@@ -91,7 +93,10 @@ namespace game {
         game_manager(window::gm_window *window);
 
         game::party *party = NULL;
+        rbb_utils::rbb_text *win_text;
+        rbb_utils::rbb_text *lose_text;
         rbb_utils::rbb_text *point_text;
+        rbb_utils::rbb_image *padlock;
         
         void load_party(int map_number);
         void display_party(window::gm_window *window);

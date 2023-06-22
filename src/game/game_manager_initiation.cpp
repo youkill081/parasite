@@ -146,6 +146,7 @@ struct map *create_new_map(std::string file_name, window::gm_window *window)
 game_manager::game_manager(window::gm_window *window)
 {
     DIR *dir = opendir(MAP_FOLDER);
+    SDL_Rect temp_rect;
     struct dirent *data;
     struct map *temp;
     std::list<std::string> file_list;
@@ -158,14 +159,29 @@ game_manager::game_manager(window::gm_window *window)
     closedir(dir);
     file_list.sort();
     std::list<std::string>::iterator curs;
+    bool locked = false;
     for (curs = file_list.begin(); curs != file_list.end(); curs++) {
         temp = create_new_map(*curs, window);
+        temp->locked = locked;
         this->map_list.push_back(temp);
         this->number_map++;
+        locked = true;
     }
 
     this->point_text = new rbb_utils::rbb_text("parasite left: x", COLOR_BLACK, DEFAULT_FONT, PARASITE_LEFT_SIZE, {PARASITE_LEFT_POSITION,  750, 200});
     this->point_text->create_texture(window);
+
+    this->win_text = new rbb_utils::rbb_text("You win", COLOR_ORANGE, DEFAULT_FONT, 70, {0, 0, 750, 200});
+    this->lose_text = new rbb_utils::rbb_text("You lose", COLOR_RED, DEFAULT_FONT, 70, {0, 0, 750, 200});
+    this->win_text->create_texture(window);
+    this->lose_text->create_texture(window);
+    temp_rect = win_text->get_text_area();
+    win_text->set_position(gm_math::gm_vector(window->get_size().x / 2 - temp_rect.w / 2, window->get_size().y / 2 - temp_rect.h / 2));
+    temp_rect = lose_text->get_text_area();
+    lose_text->set_position(gm_math::gm_vector(window->get_size().x / 2 - temp_rect.w / 2, window->get_size().y / 2 - temp_rect.h / 2));
+    
+    this->padlock = new rbb_utils::rbb_image(PADLOCK_TEXTURE, {PADLOCK_TEXTURE_SIZE, 0, 0}, 0);
+    this->padlock->create_texture(window);
     
     this->party = new game::party();
 }

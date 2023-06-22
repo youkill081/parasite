@@ -50,9 +50,11 @@ namespace gm_scenes {
         if (window->event->key_is_pressed_scancode(SDL_SCANCODE_ESCAPE))
             return SCENE_MENU;
         if (window->event->key_is_pressed_scancode(SDL_SCANCODE_KP_ENTER) || window->event->key_is_pressed_scancode(SDL_SCANCODE_RETURN)) {
-            game_manager->load_party(current_choosen_map_index);
-            game_manager->create_text_texture(window);
-            return SCENE_GAME;
+            if (not current_choosen_map->locked) {
+                game_manager->load_party(current_choosen_map_index);
+                game_manager->create_text_texture(window);
+                return SCENE_GAME;
+            }
         }
         return SCENE_LEVEL_CHOOSE;
     }
@@ -81,10 +83,13 @@ namespace gm_scenes {
         right_arrow->update(window, NULL);
     }
     
-    void draw_map(window::gm_window *window)
+    void draw_map_level_choose(window::gm_window *window, game::game_manager *game_manager)
     {
-        SDL_Rect draw_rect = {(int) window->get_size().x / 2 - display_size / 2, (int) (window->get_size().y / 2 + TITLE_MARGIN) - display_size / 2, display_size, display_size};
-
+        static SDL_Rect draw_rect = {(int) window->get_size().x / 2 - display_size / 2, (int) (window->get_size().y / 2 + TITLE_MARGIN) - display_size / 2, display_size, display_size};
+        game_manager->padlock->set_position(gm_math::gm_vector(
+                                                draw_rect.x + draw_rect.w / 2 - game_manager->padlock->get_texture_size().x / 2,
+                                                draw_rect.y + draw_rect.h / 2 - game_manager->padlock->get_texture_size().y / 2));
+        
         if (window->event->mouse_position.x >= draw_rect.x + GAME_SQUARE_SIZE && window->event->mouse_position.x <= draw_rect.x + draw_rect.w - GAME_SQUARE_SIZE &&
             window->event->mouse_position.y >= draw_rect.y + GAME_SQUARE_SIZE && window->event->mouse_position.y <= draw_rect.y + draw_rect.h - GAME_SQUARE_SIZE) {
             if (display_size < 500)
@@ -95,12 +100,16 @@ namespace gm_scenes {
         }
 
         SDL_RenderCopy(window->get_renderer(), current_choosen_map->map_texture, NULL, &draw_rect);
+
+        if (current_choosen_map->locked) {
+            game_manager->padlock->draw(window);
+        }
     }
     
     int draw_level_choose(window::gm_window *window, game::game_manager *game_manager)
     {
         update_level_choose(window, game_manager);
-        draw_map(window);
+        draw_map_level_choose(window, game_manager);
 
         if (current_choosen_map_index > 0)
             left_arrow->draw(window);

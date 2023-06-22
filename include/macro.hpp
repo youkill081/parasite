@@ -22,6 +22,8 @@ enum {
 #define VIRUS_TEXTURE_SIZE 20, 20
 #define PARASITE_TEXTURE "ressources/parasite.bmp"
 #define PARASITE_TEXTURE_SIZE 20, 20
+#define PADLOCK_TEXTURE "ressources/padlock.bmp"
+#define PADLOCK_TEXTURE_SIZE 52, 46
 
 #define ERROR_CODE 84
 

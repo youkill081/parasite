@@ -60,23 +60,49 @@ namespace gm_scenes {
     
     void update_game(window::gm_window *window, game::game_manager *game_manager)
     {
-        update_kb_input(window, game_manager);
-        set_player_position(window, game_manager, map_draw_position);
+        if (game_manager->party->player->alive) {
+            update_kb_input(window, game_manager);
+            set_player_position(window, game_manager, map_draw_position);
+            move_player(window, game_manager);
+        }
+        
         set_virus_position(window, game_manager, map_draw_position);
-        move_player(window, game_manager);
         move_virus(window, game_manager);
         update_clock->restart();
+    }
+
+    void check_lose(game::game_manager *game_manager)
+    {
+        for (int i = 0; i < 4; i++) {
+            if (game_manager->party->player->box.x == game_manager->party->virus_list[i]->box.x &&
+                game_manager->party->player->box.y == game_manager->party->virus_list[i]->box.y)
+                game_manager->party->player->alive = false;
+        }
     }
     
     int draw_game_scene(window::gm_window *window, game::game_manager *game_manager)
     {
         draw_map(window, game_manager);
 
-        if (update_clock->get_elapsed_milisecond() > GAME_UPDATE_TIME)
+        if (update_clock->get_elapsed_milisecond() > GAME_UPDATE_TIME && game_manager->party->parasite_left > 0)
             update_game(window, game_manager);
         draw_perso(window, game_manager);
         draw_virus(window, game_manager);
         game_manager->point_text->draw(window);
+
+        check_lose(game_manager);
+        
+        if (game_manager->party->parasite_left == 0) {
+            game_manager->win_text->draw(window);
+            if (window->event->key_is_pressed_scancode(SDL_SCANCODE_RETURN) || window->event->key_is_pressed_scancode(SDL_SCANCODE_KP_ENTER))
+                return SCENE_MENU;
+        }
+        if (not game_manager->party->player->alive) {
+            game_manager->lose_text->draw(window);
+            if (window->event->key_is_pressed_scancode(SDL_SCANCODE_RETURN) || window->event->key_is_pressed_scancode(SDL_SCANCODE_KP_ENTER))
+                return SCENE_MENU;
+        }
+        
         return SCENE_GAME;
     }
 }

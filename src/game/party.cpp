@@ -59,4 +59,6 @@ void game::party::load_party(struct map *map)
         this->virus_list[i]->box_position = gm_math::gm_vector(5, 5);
         this->virus_list[i]->direction = game::direction::NONE;
     }
+
+    this->player->alive = true;
 }
