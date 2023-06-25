@@ -45,12 +45,21 @@ namespace gm_scenes {
         return false;
     }
 
+    void unlock_next_level(game::game_manager *game_manager)
+    {
+        if (current_choosen_map_index < game_manager->get_number_map() - 1) {
+            game_manager->get_map(current_choosen_map_index + 1)->locked = false;
+        } else {
+            printf("you have unlocked all level !\n");
+        }
+    }
+    
     int get_return_value_lc(window::gm_window *window, game::game_manager *game_manager)
     {
         if (window->event->key_is_pressed_scancode(SDL_SCANCODE_ESCAPE))
             return SCENE_MENU;
         if (window->event->key_is_pressed_scancode(SDL_SCANCODE_KP_ENTER) || window->event->key_is_pressed_scancode(SDL_SCANCODE_RETURN)) {
-            if (not current_choosen_map->locked) {
+            if (ENABLE_LOCKING == false || not current_choosen_map->locked) {
                 game_manager->load_party(current_choosen_map_index);
                 game_manager->create_text_texture(window);
                 return SCENE_GAME;

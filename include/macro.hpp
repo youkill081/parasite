@@ -42,3 +42,5 @@ enum {
 
 #define PARASITE_LEFT_POSITION 50, 1000
 #define PARASITE_LEFT_SIZE 60
+
+#define ENABLE_LOCKING true

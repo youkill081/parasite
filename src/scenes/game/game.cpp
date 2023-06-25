@@ -94,8 +94,10 @@ namespace gm_scenes {
         
         if (game_manager->party->parasite_left == 0) {
             game_manager->win_text->draw(window);
-            if (window->event->key_is_pressed_scancode(SDL_SCANCODE_RETURN) || window->event->key_is_pressed_scancode(SDL_SCANCODE_KP_ENTER))
+            if (window->event->key_is_pressed_scancode(SDL_SCANCODE_RETURN) || window->event->key_is_pressed_scancode(SDL_SCANCODE_KP_ENTER)) {
+                gm_scenes::unlock_next_level(game_manager);
                 return SCENE_MENU;
+            }
         }
         if (not game_manager->party->player->alive) {
             game_manager->lose_text->draw(window);
