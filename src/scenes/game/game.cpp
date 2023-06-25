@@ -55,7 +55,7 @@ namespace gm_scenes {
     
     void draw_perso(window::gm_window *window, game::game_manager *game_manager)
     {
-        game_manager->party->player->texture->draw(window);
+        game_manager->party->player->draw_player(window);
     }
     
     void update_game(window::gm_window *window, game::game_manager *game_manager)

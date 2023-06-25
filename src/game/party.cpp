@@ -13,6 +13,7 @@ using namespace game;
 game::player::player(void)
 {
     this->texture = new rbb_utils::rbb_image(PERSO_TEXTURE, {0, 0, 25, 25}, RBB_IMAGE_RESIZE);
+    this->anim_clock = new rbb_clock::rbb_clock();
 }
 
 game::virus::virus(void)

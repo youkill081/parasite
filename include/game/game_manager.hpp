@@ -14,6 +14,7 @@
 #include "utils/image.hpp"
 #include "utils/text.hpp"
 #include "window.hpp"
+#include "clock.hpp"
 
 namespace game {
     enum map_entity {
@@ -24,11 +25,11 @@ namespace game {
     };
 
     enum direction {
-        UP,
-        LEFT,
-        RIGHT,
-        DOWN,
-        NONE
+        UP = 3,
+        LEFT = 2,
+        RIGHT = 1,
+        DOWN = 0,
+        NONE = 4
     };
     
     struct map {
@@ -67,6 +68,10 @@ namespace game {
         gm_math::gm_vector box;
         gm_math::gm_vector box_position;
         game::direction direction;
+        rbb_clock::rbb_clock *anim_clock;
+        int animation_state = 0;
+        
+        void draw_player(window::gm_window *window);
     };
     
     class party {

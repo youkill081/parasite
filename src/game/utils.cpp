@@ -6,6 +6,7 @@
 */
 
 #include "game/game_manager.hpp"
+#include "macro.hpp"
 
 using namespace game;
 
@@ -35,4 +36,16 @@ void game_manager::create_player_texture(window::gm_window *window)
 void game_manager::create_text_texture(window::gm_window *window)
 {
     this->point_text->create_texture(window);
+}
+
+void game::player::draw_player(window::gm_window *window)
+{
+    if (this->anim_clock->get_elapsed_second() > PLAYER_ANIMATION_WAIT) {
+        this->animation_state++;
+        if (animation_state > 3)
+            animation_state = 0;
+        this->texture->set_texture_rect({this->direction * PERSO_TEXTURE_SQUARE, PERSO_TEXTURE_SQUARE * this->animation_state, 21, 21});
+        this->anim_clock->restart();
+    }
+    this->texture->draw(window);
 }

@@ -17,13 +17,16 @@ enum {
 
 #define MAP_FOLDER "ressources/maps/"
 
-#define PERSO_TEXTURE "ressources/testpac.bmp"
+#define PERSO_TEXTURE "ressources/pacanimated.bmp"
+#define PERSO_TEXTURE_SQUARE 21
 #define VIRUS_TEXTURE "ressources/virus.bmp"
 #define VIRUS_TEXTURE_SIZE 20, 20
 #define PARASITE_TEXTURE "ressources/parasite.bmp"
 #define PARASITE_TEXTURE_SIZE 20, 20
 #define PADLOCK_TEXTURE "ressources/padlock.bmp"
 #define PADLOCK_TEXTURE_SIZE 52, 46
+
+#define PLAYER_ANIMATION_WAIT 0.2
 
 #define ERROR_CODE 84
 

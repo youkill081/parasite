@@ -18,6 +18,7 @@ rbb_image::rbb_image(std::string path, SDL_Rect rect, int flags)
     this->texture_path = path;
     this->rect = rect;
     this->flags = flags;
+    this->texture_rect = NULL;
 }
 
 gm_math::gm_vector rbb_image::get_size(void)
@@ -64,7 +65,13 @@ gm_math::gm_vector rbb_image::get_texture_size(void)
 
 void rbb_image::set_texture_rect(SDL_Rect new_rect)
 {
-    this->texture_rect = &new_rect;
+    if (this->texture_rect != NULL)
+        free(texture_rect);
+    this->texture_rect = (SDL_Rect *) malloc(sizeof(SDL_Rect));
+    this->texture_rect->x = new_rect.x;
+    this->texture_rect->y = new_rect.y;
+    this->texture_rect->w = new_rect.w;
+    this->texture_rect->h = new_rect.h;
 }
 
 void rbb_image::move_texutre_rect(gm_math::gm_vector move)
@@ -80,10 +87,10 @@ void rbb_image::draw(window::gm_window *window)
             gm_math::gm_vector tex_size = this->get_texture_size();
             float mul = fmin(std::fabs(this->rect.w / tex_size.x), std::fabs(this->rect.h / tex_size.y));
             SDL_Rect temp = {this->rect.x, this->rect.y, (int) (tex_size.x * mul), (int) (tex_size.y * mul)};
-            SDL_RenderCopy(window->get_renderer(), this->texture, NULL, &temp);
+            SDL_RenderCopy(window->get_renderer(), this->texture, this->texture_rect, &temp);
         }
         else
-            SDL_RenderCopy(window->get_renderer(), this->texture, NULL, &this->rect);
+            SDL_RenderCopy(window->get_renderer(), this->texture, this->texture_rect, &this->rect);
     } else {
         gm_math::gm_vector tex_size = this->get_texture_size();
         SDL_Rect temp = {this->rect.x, this->rect.y, (int) tex_size.x, (int) tex_size.y};
