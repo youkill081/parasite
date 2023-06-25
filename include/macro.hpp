@@ -44,3 +44,16 @@ enum {
 #define PARASITE_LEFT_SIZE 60
 
 #define ENABLE_LOCKING true
+
+#define RULES_TEXT \
+    "\
+The rules are simple\n\n\
+You are a parasite eater and you have to eat all the parasites on each map \n\n\
+When you have eaten all the parasite you unlock the next one"
+#define RULES_IMAGE "ressources/rules_eat.bmp"
+
+#define CONTROL_TEXT \
+    "\
+the controls are as simple as the rules\n\n\
+you can turn anywhere, to do this you must use the directional arrows"
+#define CONTROL_IMAGE "ressources/control_arrow.bmp"

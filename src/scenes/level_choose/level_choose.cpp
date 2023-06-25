@@ -58,7 +58,7 @@ namespace gm_scenes {
     {
         if (window->event->key_is_pressed_scancode(SDL_SCANCODE_ESCAPE))
             return SCENE_MENU;
-        if (window->event->key_is_pressed_scancode(SDL_SCANCODE_KP_ENTER) || window->event->key_is_pressed_scancode(SDL_SCANCODE_RETURN)) {
+        if (window->event->key_is_pressed(SDLK_KP_ENTER) || window->event->key_is_pressed(SDLK_RETURN)) {
             if (ENABLE_LOCKING == false || not current_choosen_map->locked) {
                 game_manager->load_party(current_choosen_map_index);
                 game_manager->create_text_texture(window);

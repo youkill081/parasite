@@ -61,7 +61,7 @@ rbb_text::rbb_text(std::string text, SDL_Color color, std::string font_path, int
 void rbb_text::create_texture(window::gm_window *window)
 {
     int w, h;
-    SDL_Surface *surf = TTF_RenderUTF8_Blended(this->font, this->text.c_str(), this->color);
+    SDL_Surface *surf = TTF_RenderUTF8_Blended_Wrapped(this->font, this->text.c_str(), this->color, this->rect.w);
     SDL_DestroyTexture(this->texture);
     this->texture = SDL_CreateTextureFromSurface(window->get_renderer(), surf);
     SDL_QueryTexture(this->texture, NULL, NULL, &w, &h);
